@@ -682,8 +682,8 @@ with tab_ml:
         "∈ [0,1] from transit time, temperature, humidity and cargo type."
     )
 
-    try:
-    styled = (
+try:
+ styled = (
         res_df.style
         .format({"MAE": "{:.4f}", "RMSE": "{:.4f}", "R²": "{:.4f}", "Fit (s)": "{:.2f}"})
         .background_gradient(subset=["R²"], cmap="Greens")
