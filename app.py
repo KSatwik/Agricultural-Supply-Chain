@@ -33,6 +33,16 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pulp
 import streamlit as st
+import sys, importlib
+try:
+    import pandas as pd
+    _py = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    _pd = pd.__version__
+    _mpl = importlib.util.find_spec("matplotlib") is not None
+except Exception:
+    _py, _pd, _mpl = "?", "?", False
+# Show in sidebar (bottom)
+st.sidebar.caption(f"🐍 Python {_py} · pandas {_pd} · matplotlib: {'✅' if _mpl else '❌'}")
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import (
     GradientBoostingRegressor,
@@ -672,9 +682,17 @@ with tab_ml:
         "∈ [0,1] from transit time, temperature, humidity and cargo type."
     )
 
+    try:
+    styled = (
+        res_df.style
+        .format({"MAE": "{:.4f}", "RMSE": "{:.4f}", "R²": "{:.4f}", "Fit (s)": "{:.2f}"})
+        .background_gradient(subset=["R²"], cmap="Greens")
+    )
+    st.dataframe(styled, use_container_width=True)
+except ImportError:
+    # matplotlib missing -> show plain formatted table
     st.dataframe(
-        res_df.style.format({"MAE": "{:.4f}", "RMSE": "{:.4f}", "R²": "{:.4f}", "Fit (s)": "{:.2f}"})
-        .background_gradient(subset=["R²"], cmap="Greens"),
+        res_df.style.format({"MAE": "{:.4f}", "RMSE": "{:.4f}", "R²": "{:.4f}", "Fit (s)": "{:.2f}"}),
         use_container_width=True,
     )
 
