@@ -1131,14 +1131,3 @@ with tab_math:
         "volume toward cooler, faster routes — that is the hedging effect you "
         "see in the *Stochastic Lab* tab."
     )
-
-
-# ──────────────────────────────────────────────────────────────────────
-# TAB 6 — Deploy
-# ──────────────────────────────────────────────────────────────────────
-with tab_deploy:
-    st.header("🚀 Deploy to GitHub + Streamlit Cloud")
-
-    st.markdown(
-        """
-        ### 1. Repo layout
